@@ -3,5 +3,6 @@ const SiteTheme = {
 }
 
 const heroImage = require("../img/dogbg.jpg");
+const defaultImage = require("../img/defaultdog.jpg");
 
-export { SiteTheme, heroImage };
+export { SiteTheme, heroImage, defaultImage };

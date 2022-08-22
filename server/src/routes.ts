@@ -10,6 +10,10 @@ app.get('/', (req: Request, res: Response) => {
   res.sendFile(path.resolve(__dirname, "..", "/pages", "index.html"));
 });
 
+// app.get('/doglist', (req: Request, res: Response)) => {
+
+// }
+
 app.get('/yes', (req: Request, res: Response) => {
   res.send("hello");
 });

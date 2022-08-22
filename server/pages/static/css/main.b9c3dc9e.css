@@ -1,0 +1,2 @@
+@-webkit-keyframes slideInFromLeft{0%{-webkit-transform:translateX(-100%);transform:translateX(-100%)}to{-webkit-transform:translateX(0);transform:translateX(0)}}@keyframes slideInFromLeft{0%{-webkit-transform:translateX(-100%);transform:translateX(-100%)}to{-webkit-transform:translateX(0);transform:translateX(0)}}.hero{-webkit-animation:slideInFromLeft 1s ease-out 0s 1;animation:slideInFromLeft 1s ease-out 0s 1}
+/*# sourceMappingURL=main.b9c3dc9e.css.map*/

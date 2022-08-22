@@ -1,5 +1,16 @@
-import { Flex, AspectRatio, Image, Heading, Text } from "@chakra-ui/react";
-import { SiteTheme } from "../util/global";
+import { Flex, Stack, Box, AspectRatio, Image, Heading, Text } from "@chakra-ui/react";
+import { Select } from "chakra-react-select";
+import { SiteTheme, defaultImage } from "../util/global";
+const options = [
+    { label: 'The Godfather', id: 1 },
+    { label: 'Pulp Fiction', id: 2 },
+    { label: 'Pulp Fiction', id: 2 },
+    { label: 'Pulp Fiction', id: 2 },
+    { label: 'Pulp Fiction', id: 2 },
+    { label: 'Pulp Fiction', id: 2 },
+    { label: 'Pulp Fiction', id: 2 },
+    { label: 'Pulp Fiction', id: 2 },
+];
 
 const Main = () => {
     return (
@@ -25,6 +36,33 @@ const Main = () => {
             >
                 Simply select the dog breed and let us find the image
             </Text>
+            <Box width={["500px"]}>
+                <Select
+                    hasStickyGroupHeaders
+                    placeholder="Select a Option"
+                    size="lg"
+                    focusBorderColor={SiteTheme.green}
+                    colorScheme= "red"
+                    errorBorderColor="red"
+                    useBasicStyles={true}
+                    options={[
+                        {
+                          label: "I am red",
+                          value: "i-am-red",
+                          colorScheme: "red", // The option color scheme overrides the global
+                        },
+                        {
+                          label: "I fallback to purple",
+                          value: "i-am-purple",
+                        },
+                      ]}
+                />
+            </Box>
+            <Image
+                width="1024px"
+                height="768px"
+                src={defaultImage}
+            />
         </Flex>
     );
 }
