@@ -2,7 +2,7 @@
 
 ### Live Link: https://caninepedia.herokuapp.com/
 
-Enter a breed of a dog and get a collection of images back.
+Enter a breed of a dog and gett a collection of images back.
 
 ## Tech Stack
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
