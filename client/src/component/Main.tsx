@@ -1,5 +1,5 @@
-import { Flex, Box, Spinner, Heading, Text } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import { Flex, Box, Spinner, Heading, Text } from "@chakra-ui/react";
 import { Carousel } from "react-responsive-carousel";
 import { Select } from "chakra-react-select";
 import { SiteTheme, defaultImage, header, subheader } from "../util/global";
@@ -24,10 +24,10 @@ const Main = () => {
   const selectBreed = async (selected: Breed | null): Promise<any> => {
     const response: Response = await fetch(
       "/breed", {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          "Accept": "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify(selected)
       }
@@ -80,6 +80,7 @@ const Main = () => {
   return (
     <Flex
       as="main" 
+      id="main"
       flex="1"
       flexDirection="column"
       justify="center"
@@ -88,12 +89,11 @@ const Main = () => {
       paddingTop={["2rem","2rem", "3rem", "4rem", "4rem"]}
       paddingBottom={["2rem","2rem", "3rem", "4rem", "4rem"]}
       gap="1rem"
-      id="main"
     >
       {breeds === undefined &&
         <Spinner 
           boxSize={["150px","200px", "300px", "500px", "500px"]}
-          speed='1s'
+          speed="1s"
           color={SiteTheme.green}
         />}
         
@@ -111,12 +111,12 @@ const Main = () => {
             fontWeight="light"
             color="black"
           >
-            Simply select the dog breed and let us find the image
+            Simply select the dog breed and let us find the photos
           </Text>
 
           <Box width={["200px", "300px", "400px", "500px", "500px"]}>
             <Select
-              onChange={(selected) => {
+              onChange={(selected: Breed | null): void => {
                 setImages(undefined)
                 selectBreed(selected)
               }}
@@ -133,15 +133,12 @@ const Main = () => {
           {images === undefined &&
             <Spinner 
               boxSize={["150px","200px", "300px", "500px", "500px"]}
-              speed='1s'
+              speed="1s"
               color={SiteTheme.green}
             />}
           
           {images !== undefined &&
-            <Box 
-              width={["320px", "320px", "640px", "1024px", "1024px"]}
-              height={["320px", "320px", "600px", "850px", "850px"]}
-            >
+            <Box className="image-container" >
               <Carousel 
                 showArrows={true} 
                 showIndicators={false} 

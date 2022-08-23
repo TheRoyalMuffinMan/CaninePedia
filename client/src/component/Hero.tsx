@@ -1,7 +1,6 @@
 import { Flex, Stack, Button, Heading, Text } from "@chakra-ui/react";
 import { SiteTheme, title, header, subheader } from "../util/global";
 import "../style/css/hero.css";
-import React from "react";
 
 const Hero = () => {
   return (
@@ -47,9 +46,9 @@ const Hero = () => {
         </Stack>
 
         <Button
-          onClick={(event: React.MouseEvent) => {
+          onClick={(event: React.MouseEvent): void => {
             event.preventDefault();
-            document.getElementById("main")?.scrollIntoView({ behavior: 'smooth'});
+            document.getElementById("main")?.scrollIntoView({ behavior: "smooth"});
           }} 
           variant="outline"
           width={["100px", "150px", "150px", "200px", "250px"]}

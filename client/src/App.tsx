@@ -1,27 +1,27 @@
+import { useState } from "react";
 import { Flex, Image} from "@chakra-ui/react";
 import { chakra } from "@chakra-ui/system";
-import { useState } from "react";
 import Hero from "./component/Hero";
 import Main from "./component/Main";
 import Footer from "./component/Footer";
-import { heroImage } from "./util/global";
+import { heroImage, SiteTheme } from "./util/global";
 
 const App = () => {
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded]: [Boolean, Function] = useState<Boolean>(false);
 
   return (
     <chakra.div 
       display="flex" 
       flexDirection="column" 
       minHeight="100vh"
-      bgColor="rgb(247, 247, 247)"
+      bgColor={SiteTheme.white}
     >
       <Flex    
         position="relative"
         justify="center"
       >
         <Image 
-          onLoad = {() => setLoaded(true)}
+          onLoad = {(): void => setLoaded(true)}
           width="100%"
           loading="eager"
           src={heroImage} 

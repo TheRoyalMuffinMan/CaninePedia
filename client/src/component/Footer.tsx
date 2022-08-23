@@ -4,6 +4,7 @@ import { SiteTheme, header, subheader } from "../util/global";
 const Footer = () => {
   return (
     <Stack 
+      flex="1"
       borderTop={`5px solid ${SiteTheme.green}`} 
       justify="center" 
       align="center"
