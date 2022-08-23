@@ -11,10 +11,13 @@ const Footer = () => {
     >
       <Heading 
         color={SiteTheme.green}
+        fontSize={["1rem", "1.5rem", "2rem", "3rem", "4rem"]}
       >
         CaninePedia
       </Heading>
-      <Text>
+      <Text
+        fontSize={["0.6rem", "0.8rem", "0.8rem", "1.5rem", "2rem"]}
+      >
         Copyright © TheGreatMuffinMan
       </Text>
     </Stack>

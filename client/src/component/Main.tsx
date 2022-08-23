@@ -63,38 +63,52 @@ const Main = () => {
 
     fetchDogList();
   }, [])
-
+  if (breeds === undefined) {
+    return (
+      <Flex 
+        flex="1"
+        flexDirection="column"
+        justify="center"
+        align="center"
+        padding="4rem"
+        gap="1rem"
+        id="main"
+      >
+        <Spinner 
+          boxSize={["200px","300px", "450px", "600px", "600px"]}
+          speed='1s'
+          color={SiteTheme.green}
+        />
+      </Flex>
+    );
+  }
   return (
     <Flex 
       flex="1"
       flexDirection="column"
       justify="center"
       align="center"
-      padding="4rem"
+      padding="2rem"
+      paddingTop="4rem"
+      paddingBottom="4rem"
       gap="1rem"
+      id="main"
     >
-      {breeds === undefined && 
-        <Spinner 
-          boxSize={["600px"]}
-          speed='1s'
-          color={SiteTheme.green}
-        />
-      }
       <Heading 
-        fontSize={["1rem", "1.5rem", "2rem", "3rem", "4rem"]}
+        fontSize={["1.5rem", "1.5rem", "2rem", "3rem", "4rem"]}
         fontWeight="black"
         color={SiteTheme.green}
       >
         The Search Is Over
       </Heading>
       <Text
-        fontSize={["0.6rem", "0.8rem", "0.8rem", "1.5rem", "2rem"]}
+        fontSize={["0.8rem", "0.8rem", "0.8rem", "1.5rem", "2rem"]}
         fontWeight="light"
         color="black"
       >
         Simply select the dog breed and let us find the image
       </Text>
-      <Box width={["500px"]}>
+      <Box width={["200px", "300px", "400px", "500px", "500px"]}>
         <Select
           onChange={(selected) => selectBreed(selected).then}
           hasStickyGroupHeaders
@@ -107,8 +121,8 @@ const Main = () => {
         />
       </Box>
       <Image
-        width="1024px"
-        height="768px"
+        width={["320px", "320px", "640px", "1024px", "1024px"]}
+        height={["240px", "240px", "480px", "768px", "768px"]}
         src={image}
       />
     </Flex>

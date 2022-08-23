@@ -1,9 +1,9 @@
 const SiteTheme = {
-    green: "#00BD70"
+  green: "#00BD70"
 };
 const defaultDog = {
-    label: "Husky",
-    value: ["husky"]
+  label: "Husky",
+  value: ["husky"]
 };
 
 const heroImage = require("../img/dogbg.jpg");
