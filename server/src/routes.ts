@@ -1,38 +1,44 @@
-import express, { Express, Request, Response } from 'express';
-import bodyParser from 'body-parser';
+import Koa from 'koa';
+import Router from 'koa-router';
+import serve from 'koa-static';
+import mount from 'koa-mount';
+import json from 'koa-json';
+import KoaLogger from 'koa-logger';
+import bodyParser from 'koa-bodyparser';
 import fetch from 'cross-fetch';
-
 const path: any = require('path');
 
-const router: Express = express();
-const jsonParser: any = bodyParser.json();
+const app: Koa = new Koa();
+const pages: Koa = new Koa();
+const router: Router = new Router();
 const port: string | number = process.env.PORT || 3011;
 
-router.use(express.static(path.join(__dirname, "..", "/pages")))
+app.use(serve(path.join(__dirname, "..", "/pages")));
+app.use(mount("/", pages));
+app.use(bodyParser());
+app.use(json());
+app.use(KoaLogger());
 
-router.get('/', (req: Request, res: Response): void => {
-  res.sendFile(path.resolve(__dirname, "..", "/pages", "index.html"));
+router.get('/list', async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
+  const response = await fetch("https://dog.ceo/api/breeds/list/all");
+  const result = await response.json();
+  ctx.body = result;
+  await next();
 });
 
-router.get('/list', async (req: Request, res: Response): Promise<any> => {
-  const response = await fetch("https://dog.ceo/api/breeds/list/all")
-  if (!response.ok) {
-    res.send({ msg: `Error! Request Code: ${response.statusText}` })
-  }
-
-  response.json().then(breeds => res.send(breeds));
-});
-
-router.post('/breed', jsonParser, async (req: Request, res: Response): Promise<any> => {
-  const breed = req.body.value[0]
-  const subBreed = (req.body.value.length > 1) ? '/' + req.body.value[1] : '';
+router.post('/breed', async (ctx: Koa.ParameterizedContext, next: Koa.Next): Promise<any> => {
+  const breed = ctx.request.body.value[0]
+  const subBreed = (ctx.request.body.value.length > 1) ? '/' + ctx.request.body.value[1] : '';
   const response = await fetch(`https://dog.ceo/api/breed/${breed + subBreed}/images/random`);
-  if (!response.ok) {
-    res.send({ msg: `Error! Request Code: ${response.statusText}` })
-  }
-  response.json().then(image => res.send(image));
+  const result = await response.json();
+  ctx.body = result;
+  await next();
 });
 
-router.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+app
+  .use(router.routes())
+  .use(router.allowedMethods());
+
+app.listen(port, () => {
+	console.log(`Server running on http://localhost:${port}`);
 });
