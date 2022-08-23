@@ -5,7 +5,7 @@ import { SiteTheme, defaultImage } from "../util/global";
 
 type Breed = {
   label: string,
-  value: string,
+  value: string[],
 }
 
 const Main = () => {
@@ -21,17 +21,21 @@ const Main = () => {
         if (result[breed].length > 0) {
 
           result[breed].forEach((subBreed: string) => {
+            const dog = subBreed.charAt(0).toUpperCase() + 
+                        subBreed.slice(1) + ' ' +
+                        breed.charAt(0).toUpperCase() +
+                        breed.slice(1);
             dogs.push({
-              label: breed + ' ' + subBreed,
-              value: breed + ' ' + subBreed
+              label: dog,
+              value: [breed, subBreed]
             })
           })
 
         } else {
 
           dogs.push({
-            label: breed,
-            value: breed
+            label: breed.charAt(0).toUpperCase() + breed.slice(1),
+            value: [breed]
           })
 
         }
