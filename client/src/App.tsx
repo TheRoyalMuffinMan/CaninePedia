@@ -29,7 +29,9 @@ const App = () => {
         />
         {loaded && <Hero />}
       </Flex>
+
       {loaded && <Main />}
+
       {loaded && <Footer />}
     </chakra.div>
   );

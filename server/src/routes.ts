@@ -20,17 +20,17 @@ app.use(json());
 app.use(KoaLogger());
 
 router.get('/list', async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
-  const response = await fetch("https://dog.ceo/api/breeds/list/all");
-  const result = await response.json();
+  const response: Response = await fetch("https://dog.ceo/api/breeds/list/all");
+  const result: Body = await response.json();
   ctx.body = result;
   await next();
 });
 
 router.post('/breed', async (ctx: Koa.ParameterizedContext, next: Koa.Next): Promise<any> => {
-  const breed = ctx.request.body.value[0]
-  const subBreed = (ctx.request.body.value.length > 1) ? '/' + ctx.request.body.value[1] : '';
-  const response = await fetch(`https://dog.ceo/api/breed/${breed + subBreed}/images/random`);
-  const result = await response.json();
+  const breed: string = ctx.request.body.value[0]
+  const subBreed: string = (ctx.request.body.value.length > 1) ? '/' + ctx.request.body.value[1] : '';
+  const response: Response = await fetch(`https://dog.ceo/api/breed/${breed + subBreed}/images`);
+  const result: Body = await response.json();
   ctx.body = result;
   await next();
 });

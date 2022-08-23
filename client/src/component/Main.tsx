@@ -1,16 +1,25 @@
-import { Flex, Box, Image, Spinner, Heading, Text } from "@chakra-ui/react";
+import { Flex, Box, Spinner, Heading, Text } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import { Carousel } from "react-responsive-carousel";
 import { Select } from "chakra-react-select";
-import { SiteTheme, defaultImage } from "../util/global";
+import { SiteTheme, defaultImage, header, subheader } from "../util/global";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import "../style/css/main.css";
 
 type Breed = {
   label: string,
   value: string[]
 }
 
+type Breeds = {
+  [key: string]: Array<string>
+}
+
+type BreedImages = string[];
+
 const Main = () => {
   const [breeds, setBreeds]: [Breed[] | undefined, Function] = useState<Breed[] | undefined>(undefined);
-  const [image, setImage]: [any, Function] = useState<any>(defaultImage);
+  const [images, setImages]: [any, Function] = useState<BreedImages | undefined>([defaultImage]);
 
   const selectBreed = async (selected: Breed | null): Promise<any> => {
     const response: Response = await fetch(
@@ -24,24 +33,26 @@ const Main = () => {
       }
     );
 
-    const breedImage: any = (await response.json())["message"];
-    setImage(breedImage);
+    const breedImages: string[] = (await response.json())["message"];
+    setImages(breedImages);
   }
 
   useEffect(() => {
     const fetchDogList = async (): Promise<any> => {
       const response: Response = await fetch("/list");
-      const result: any = (await response.json())["message"];
+      const result: Breeds = (await response.json())["message"];
       let dogs: Breed[] = []
       
       Object.keys(result).forEach((breed: string) => {
         if (result[breed].length > 0) {
 
           result[breed].forEach((subBreed: string) => {
-            const dog: string = subBreed.charAt(0).toUpperCase() + 
-                                subBreed.slice(1) + ' ' +
-                                breed.charAt(0).toUpperCase() +
-                                breed.slice(1);
+            const dog: string = 
+              subBreed.charAt(0).toUpperCase() + 
+              subBreed.slice(1) + ' ' +
+              breed.charAt(0).toUpperCase() +
+              breed.slice(1);
+
             dogs.push({
               label: dog,
               value: [breed, subBreed]
@@ -57,74 +68,91 @@ const Main = () => {
         }
       });
 
-      dogs.sort((a, b) => a.label.charAt(0).charCodeAt(0) - b.label.charAt(0).charCodeAt(0));
+      dogs.sort((a: Breed, b: Breed) => {
+        return a.label.charAt(0).charCodeAt(0) - b.label.charAt(0).charCodeAt(0)
+      });
       setBreeds(dogs);
     }
 
     fetchDogList();
   }, [])
-  if (breeds === undefined) {
-    return (
-      <Flex 
-        flex="1"
-        flexDirection="column"
-        justify="center"
-        align="center"
-        padding="4rem"
-        gap="1rem"
-        id="main"
-      >
-        <Spinner 
-          boxSize={["200px","300px", "450px", "600px", "600px"]}
-          speed='1s'
-          color={SiteTheme.green}
-        />
-      </Flex>
-    );
-  }
+
   return (
-    <Flex 
+    <Flex
+      as="main" 
       flex="1"
       flexDirection="column"
       justify="center"
       align="center"
       padding="2rem"
-      paddingTop="4rem"
-      paddingBottom="4rem"
+      paddingTop={["2rem","2rem", "3rem", "4rem", "4rem"]}
+      paddingBottom={["2rem","2rem", "3rem", "4rem", "4rem"]}
       gap="1rem"
       id="main"
     >
-      <Heading 
-        fontSize={["1.5rem", "1.5rem", "2rem", "3rem", "4rem"]}
-        fontWeight="black"
-        color={SiteTheme.green}
-      >
-        The Search Is Over
-      </Heading>
-      <Text
-        fontSize={["0.8rem", "0.8rem", "0.8rem", "1.5rem", "2rem"]}
-        fontWeight="light"
-        color="black"
-      >
-        Simply select the dog breed and let us find the image
-      </Text>
-      <Box width={["200px", "300px", "400px", "500px", "500px"]}>
-        <Select
-          onChange={(selected) => selectBreed(selected).then}
-          hasStickyGroupHeaders
-          placeholder="Select a Option"
-          size="lg"
-          focusBorderColor={SiteTheme.green}
-          errorBorderColor="red"
-          useBasicStyles={true}
-          options={breeds}
-        />
-      </Box>
-      <Image
-        width={["320px", "320px", "640px", "1024px", "1024px"]}
-        height={["240px", "240px", "480px", "768px", "768px"]}
-        src={image}
-      />
+      {breeds === undefined &&
+        <Spinner 
+          boxSize={["150px","200px", "300px", "500px", "500px"]}
+          speed='1s'
+          color={SiteTheme.green}
+        />}
+        
+      {breeds !== undefined &&
+        <>
+          <Heading 
+            fontSize={header}
+            fontWeight="black"
+            color={SiteTheme.green}
+          >
+            The Search Is Over
+          </Heading>
+          <Text
+            fontSize={subheader}
+            fontWeight="light"
+            color="black"
+          >
+            Simply select the dog breed and let us find the image
+          </Text>
+
+          <Box width={["200px", "300px", "400px", "500px", "500px"]}>
+            <Select
+              onChange={(selected) => {
+                setImages(undefined)
+                selectBreed(selected)
+              }}
+              hasStickyGroupHeaders
+              placeholder="Select an Option"
+              size="md"
+              focusBorderColor={SiteTheme.green}
+              errorBorderColor="red"
+              useBasicStyles={true}
+              options={breeds}
+            />
+          </Box>
+
+          {images === undefined &&
+            <Spinner 
+              boxSize={["150px","200px", "300px", "500px", "500px"]}
+              speed='1s'
+              color={SiteTheme.green}
+            />}
+          
+          {images !== undefined &&
+            <Box 
+              width={["320px", "320px", "640px", "1024px", "1024px"]}
+              height={["320px", "320px", "600px", "850px", "850px"]}
+            >
+              <Carousel 
+                showArrows={true} 
+                showIndicators={false} 
+                showStatus={false}
+              >
+                {images.map((img: string, index: number) => (
+                    <img src={img} key={index} alt="A cute dog." />
+                ))}
+              </Carousel>
+            </Box>}
+        </>}
     </Flex>
   );
 }

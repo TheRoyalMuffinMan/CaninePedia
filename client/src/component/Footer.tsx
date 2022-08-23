@@ -1,5 +1,5 @@
 import { Stack, Heading, Text } from "@chakra-ui/react";
-import { SiteTheme } from "../util/global";
+import { SiteTheme, header, subheader } from "../util/global";
 
 const Footer = () => {
   return (
@@ -11,14 +11,15 @@ const Footer = () => {
     >
       <Heading 
         color={SiteTheme.green}
-        fontSize={["1rem", "1.5rem", "2rem", "3rem", "4rem"]}
+        fontSize={header}
       >
         CaninePedia
       </Heading>
+
       <Text
-        fontSize={["0.6rem", "0.8rem", "0.8rem", "1.5rem", "2rem"]}
+        fontSize={subheader}
       >
-        Copyright © TheGreatMuffinMan
+        Copyright © Andrew Hoyle
       </Text>
     </Stack>
   );
