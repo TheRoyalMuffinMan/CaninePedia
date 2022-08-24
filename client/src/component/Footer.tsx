@@ -20,7 +20,7 @@ const Footer = () => {
       <Text
         fontSize={subheader}
       >
-        Copyright © Andrew Hoyle
+        Copyright © TheRoyalMuffinMan
       </Text>
     </Stack>
   );
