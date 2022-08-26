@@ -15,7 +15,7 @@ app.use(serve(path.join(__dirname, "..", "/pages")));
 app.use(mount('/', pages));
 app.use(bodyParser());
 
-router.get("/list", async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
+router.get("/list", async (ctx: Koa.ParameterizedContext, next: Koa.Next): Promise<any> => {
   const response: Response = await fetch("https://dog.ceo/api/breeds/list/all");
   const result: Body = await response.json();
   ctx.body = result;
@@ -36,5 +36,5 @@ app
   .use(router.allowedMethods());
 
 app.listen(port, () => {
-	console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running on http://localhost:${port}`);
 });
